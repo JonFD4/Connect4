@@ -19,12 +19,17 @@ def create_board():
 
 
 def drop_piece(board, row, col, piece):
+   '''
+    Update the game board by placing the specified game piece in the specified
+    row and column. The function modifies the game board in-place.
+
+    Parameters:
+    - board: The game board to be updated.
+    - row: The row where the piece will be placed.
+    - col: The column where the piece will be placed.
+    - piece: The game piece to be placed ('A' or '0').
     '''
-    the function updates the game board (board) by placing 
-    the specified game piece (piece) in the specified row (row) and column (col). 
-    It modifies the game board in-place.
-    '''
-    board[row][col] = piece
+   board[row][col] = piece
 
 def print_board(board):
     """
