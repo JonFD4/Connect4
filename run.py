@@ -17,6 +17,9 @@ def create_board():
     """
     return np.zeros((ROW_COUNT, COLUMN_COUNT), dtype=int)
 
+
+
+
 def print_board(board):
     """
     Iterate over each row in the 2D list board.
@@ -26,7 +29,7 @@ def print_board(board):
 
     """
     for row in board:
-        print(' '.join(map(str, row)), end= '')
+        print(' '.join(map(str, row)))
     print()
 
 def play_game():
@@ -34,5 +37,5 @@ def play_game():
     Runs the game
     """
     board = create_board()
-    print(board)
+    print_board(board)
 play_game()
