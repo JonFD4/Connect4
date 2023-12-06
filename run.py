@@ -18,7 +18,13 @@ def create_board():
     return np.zeros((ROW_COUNT, COLUMN_COUNT), dtype=int)
 
 
-
+def drop_piece(board, row, col, piece):
+    '''
+    the function updates the game board (board) by placing 
+    the specified game piece (piece) in the specified row (row) and column (col). 
+    It modifies the game board in-place.
+    '''
+    board[row][col] = piece
 
 def print_board(board):
     """
@@ -37,5 +43,7 @@ def play_game():
     Runs the game
     """
     board = create_board()
+
+    drop_piece(board, 0, 2, 1)
     print_board(board)
 play_game()
