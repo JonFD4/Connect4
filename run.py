@@ -65,8 +65,12 @@ def play_game():
     """
     board = create_board()
     print_board(board)
-    drop_piece(board, 2, 3,1)
+
+    # Step 2: Take Player Input
+    col = int(input("Player, choose a column (1:A to 7:G): ")) - 1
+    row = get_next_open_row(board, col)
+    piece = 1  # Assuming the player is always 1 for now
+    drop_piece(board, row, col, piece)
+
     print_board(board)
-    print(is_valid_location(board, 3))  # Should be True
-    print(get_next_open_row(board, 3))
 play_game()
