@@ -33,6 +33,9 @@ def drop_piece(board, col, piece):
             board[row][col] = piece
             break
 
+def is_valid_location(board, col):
+    return board[ROW_COUNT - 1][col] == 0
+
 def print_board(board):
     """
     Print the game board with row and column labels.
@@ -56,12 +59,8 @@ def play_game():
     Runs the game
     """
     board = create_board()
-
-    drop_piece(board, 2, 1)
-    drop_piece(board, 2, 2)
-    drop_piece(board, 3, 1)
-    drop_piece(board, 3, 2)
-
     print_board(board)
 
+    col_to_test = 3
+    print(f"Is column {chr(ord('A') + col_to_test)} valid? {is_valid_location(board, col_to_test)}")
 play_game()
