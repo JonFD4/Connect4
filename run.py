@@ -58,7 +58,17 @@ def print_board(board):
     for i, row in enumerate(board):
         row_str = ' '.join(map(str, row))
         print(f"{row_labels[i]} {row_str}")
-
+def winning_move(board, piece):
+    for c in range(COLUMN_COUNT-3):
+        for r in range(ROW_COUNT):
+             if (
+                board[r][c] == piece
+                and board[r][c + 1] == piece
+                and board[r][c + 2] == piece
+                and board[r][c + 3] == piece
+            ):
+                return True
+                
 def play_game():
     """
     Runs the game
@@ -66,11 +76,17 @@ def play_game():
     board = create_board()
     print_board(board)
 
-    # Step 2: Take Player Input
     col = int(input("Player, choose a column (1:A to 7:G): ")) - 1
     row = get_next_open_row(board, col)
-    piece = 1  # Assuming the player is always 1 for now
+    piece = 1
     drop_piece(board, row, col, piece)
 
     print_board(board)
+
+  
+    if winning_move(board, piece):
+        print(f"Player {piece} wins!!")
+    else:
+        print("No winner yet.")
+
 play_game()
