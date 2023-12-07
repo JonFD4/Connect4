@@ -17,7 +17,7 @@ def create_board():
     """
     return np.zeros((ROW_COUNT, COLUMN_COUNT), dtype=int)
 
-def drop_piece(board, col, piece):
+def drop_piece(board, row, col, piece):
     '''
     Update the game board by placing the specified game piece in the lowest
     available row of the specified column. The function modifies the game
@@ -35,6 +35,11 @@ def drop_piece(board, col, piece):
 
 def is_valid_location(board, col):
     return board[ROW_COUNT - 1][col] == 0
+
+def get_next_open_row(board, col):
+    for r in range(ROW_COUNT):
+        if board[r][col] == 0:
+            return r
 
 def print_board(board):
     """
@@ -60,7 +65,8 @@ def play_game():
     """
     board = create_board()
     print_board(board)
-
-    col_to_test = 3
-    print(f"Is column {chr(ord('A') + col_to_test)} valid? {is_valid_location(board, col_to_test)}")
+    drop_piece(board, 2, 3,1)
+    print_board(board)
+    print(is_valid_location(board, 3))  # Should be True
+    print(get_next_open_row(board, 3))
 play_game()
