@@ -58,35 +58,86 @@ def print_board(board):
     for i, row in enumerate(board):
         row_str = ' '.join(map(str, row))
         print(f"{row_labels[i]} {row_str}")
+
 def winning_move(board, piece):
-    for c in range(COLUMN_COUNT-3):
+    """
+    check for winning combination in horizontal, vertical and 
+    negatively and positively sloped diagonals, respectively
+    I f no winning combination is found then the function returns false.
+    """
+    for c in range(COLUMN_COUNT - 3):
         for r in range(ROW_COUNT):
-             if (
+            if (
                 board[r][c] == piece
                 and board[r][c + 1] == piece
                 and board[r][c + 2] == piece
                 and board[r][c + 3] == piece
             ):
                 return True
+
+    for c in range(COLUMN_COUNT):
+        for r in range(ROW_COUNT - 3):
+            if (
+                board[r][c] == piece
+                and board[r + 1][c] == piece
+                and board[r + 2][c] == piece
+                and board[r + 3][c] == piece
+            ):
+                return True
+
+    for c in range(COLUMN_COUNT - 3):
+        for r in range(ROW_COUNT - 3):
+            if (
+                board[r][c] == piece
+                and board[r + 1][c + 1] == piece
+                and board[r + 2][c + 2] == piece
+                and board[r + 3][c + 3] == piece
+            ):
+                return True
+
+    for c in range(COLUMN_COUNT - 3):
+        for r in range(3, ROW_COUNT):
+            if (
+                board[r][c] == piece
+                and board[r - 1][c + 1] == piece
+                and board[r - 2][c + 2] == piece
+                and board[r - 3][c + 3] == piece
+            ):
+                return True
+
+    return False
+
                 
 def play_game():
     """
     Runs the game
     """
-    board = create_board()
-    print_board(board)
+    while True:
+        board = create_board()
+        print_board(board)
 
-    col = int(input("Player, choose a column (1:A to 7:G): ")) - 1
-    row = get_next_open_row(board, col)
-    piece = 1
-    drop_piece(board, row, col, piece)
+        player_turn = 1
 
-    print_board(board)
+        while True:
+            col = int(input(f"Player {player_turn}, choose a column (1:A to 7:G): ")) - 1
+            row = get_next_open_row(board, col)
+            piece = player_turn
+            drop_piece(board, row, col, piece)
 
-  
-    if winning_move(board, piece):
-        print(f"Player {piece} wins!!")
-    else:
-        print("No winner yet.")
+            print_board(board)
 
-play_game()
+            if winning_move(board, piece):
+                print(f"Player {piece} wins!!")
+                break  # Exit the inner loop if there's a winner
+
+            # Switch to the other player's turn
+            player_turn = 3 - player_turn  # Alternates between 1 and 2
+
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != 'yes':
+            print("Thanks for playing! Exiting...")
+            break  # Exit the outer loop if players don't want to play again
+
+if __name__ == "__main__":
+    print("Welcome to Connect 4!")
+    play_game()
