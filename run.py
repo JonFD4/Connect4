@@ -1,5 +1,6 @@
 # Import necessary modules
 from colorama import Back, Fore, init
+import pyfiglet
 import numpy as np
 import sys
 import math
@@ -42,7 +43,7 @@ def get_next_open_row(board, col):
         if board[r][col] == 0:
             return r
 
-def print_board(board, last_move_row=None, last_move_col=None):
+def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True):
     """
     Print the game board with row and column labels.
 
@@ -63,7 +64,7 @@ def print_board(board, last_move_row=None, last_move_col=None):
         print(f"{row_label} |", end="")
         
         for j, cell in enumerate(row):
-            if last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
+            if game_ongoing and last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
                 # Highlight the last moved cell with a different background color
                 if cell == 1:
                     print(Back.YELLOW + f" {cell} ", end="")
@@ -145,10 +146,11 @@ def play_game():
             piece = player_turn
             drop_piece(board, row, col, piece)
 
-            print_board(board, last_move_row=row, last_move_col=col)
+            print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
 
             if winning_move(board, piece):
                 print(f"Player {piece} wins!!")
+                game_ongoing = False
                 break  # Exit the inner loop if there's a winner
 
             # Switch to the other player's turn
@@ -160,5 +162,8 @@ def play_game():
             break  # Exit the outer loop if players don't want to play again
 
 if __name__ == "__main__":
+    T= 'CONNECT 4'
+    art= pyfiglet.figlet_format(T, font="bulbhead")
+    print(art)
     print("Welcome to Connect 4!")
     play_game()
