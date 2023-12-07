@@ -1,9 +1,13 @@
 # Import necessary modules
+from colorama import Back, Fore, init
 import numpy as np
 import sys
 import math
 import random
 import string
+
+# Initialize Colorama
+init(autoreset=True)
 
 # Define constants
 ROW_COUNT, COLUMN_COUNT = 6, 7
@@ -28,10 +32,7 @@ def drop_piece(board, row, col, piece):
     - col: The column where the piece will be placed.
     - piece: The game piece to be placed ('A' or '0').
     '''
-    for row in range(ROW_COUNT - 1, -1, -1):
-        if board[row][col] == 0:
-            board[row][col] = piece
-            break
+    board[row][col] = piece
 
 def is_valid_location(board, col):
     return board[ROW_COUNT - 1][col] == 0
@@ -41,23 +42,44 @@ def get_next_open_row(board, col):
         if board[r][col] == 0:
             return r
 
-def print_board(board):
+def print_board(board, last_move_row=None, last_move_col=None):
     """
     Print the game board with row and column labels.
 
     Parameters:
     - board: The game board to be printed.
+    - last_move_row: The row of the last moved piece.
+    - last_move_col: The column of the last moved piece.
     """
-    col_labels = [chr(ord('A') + i) for i in range(COLUMN_COUNT)]
+    col_labels = [str(i + 1) for i in range(COLUMN_COUNT)]
     row_labels = [string.ascii_lowercase[i] for i in range(ROW_COUNT)]
 
-    # Print column labels
-    print('  ' + ' '.join(col_labels))
+    # Find the maximum length of row labels to determine spacing
+    max_row_label_length = max(len(label) for label in row_labels)
 
-    # Print rows with row labels
+    # Print rows with row labels on the left side
     for i, row in enumerate(board):
-        row_str = ' '.join(map(str, row))
-        print(f"{row_labels[i]} {row_str}")
+        row_label = row_labels[i].ljust(max_row_label_length)
+        print(f"{row_label} |", end="")
+        
+        for j, cell in enumerate(row):
+            if last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
+                # Highlight the last moved cell with a different background color
+                if cell == 1:
+                    print(Back.YELLOW + f" {cell} ", end="")
+                elif cell == 2:
+                    print(Back.BLUE + f" {cell} ", end="")
+            else:
+                print(f" {cell} ", end="  ")
+        print(Fore.RESET + "|")  # Reset color after printing each row
+
+    # Print separator line
+    print(' ' + '-----'.join([''] * (COLUMN_COUNT + 1)))
+
+    # Print column labels beneath the rows
+    col_label_line = ' ' + '    '.join(col_labels)
+    print(col_label_line)
+    print()
 
 def winning_move(board, piece):
     """
@@ -107,7 +129,6 @@ def winning_move(board, piece):
 
     return False
 
-                
 def play_game():
     """
     Runs the game
@@ -124,7 +145,7 @@ def play_game():
             piece = player_turn
             drop_piece(board, row, col, piece)
 
-            print_board(board)
+            print_board(board, last_move_row=row, last_move_col=col)
 
             if winning_move(board, piece):
                 print(f"Player {piece} wins!!")
