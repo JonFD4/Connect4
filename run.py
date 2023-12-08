@@ -135,35 +135,45 @@ def play_game():
     Runs the game
     """
     while True:
-        board = create_board()
-        print_board(board)
+        print("Welcome to Connect 4!")
+        print("1. Start Game")
+        print("2. Exit")
+        choice = int(input("Enter your choice: \n"))
+        if choice == 1 :
+            board = create_board()
+            print_board(board)
 
-        player_turn = 1
+            player_turn = 1
 
-        while True:
-            col = int(input(f"Player {player_turn}, choose a column (1:A to 7:G): ")) - 1
-            row = get_next_open_row(board, col)
-            piece = player_turn
-            drop_piece(board, row, col, piece)
+            while True:
+                col = int(input(f"Player {player_turn}, choose a column (1:A to 7:G): ")) - 1
+                row = get_next_open_row(board, col)
+                piece = player_turn
+                drop_piece(board, row, col, piece)
 
-            print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
+                print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
 
-            if winning_move(board, piece):
-                print(f"Player {piece} wins!!")
-                game_ongoing = False
-                break  # Exit the inner loop if there's a winner
+                if winning_move(board, piece):
+                    print(f"Player {piece} wins!!")
+                    game_ongoing = False
+                    break  # Exit the inner loop if there's a winner
 
-            # Switch to the other player's turn
-            player_turn = 3 - player_turn  # Alternates between 1 and 2
+                # Switch to the other player's turn
+                player_turn = 3 - player_turn  # Alternates between 1 and 2
 
-        play_again = input("Do you want to play again? (yes/no): ").lower()
-        if play_again != 'yes':
-            print("Thanks for playing! Exiting...")
-            break  # Exit the outer loop if players don't want to play again
+            play_again = input("Do you want to play again? (yes/no): ").lower()
+            if play_again != 'yes':
+                print("Thanks for playing! Exiting...")
+                break  # Exit the outer loop if players don't want to play again
+        elif choice == "2":
+            print("Exiting the game. Goodbye!")
+            sys.exit()
+
+        else:
+            print("Invalid choice. Please enter 1 or 2.")
 
 if __name__ == "__main__":
     T= 'CONNECT 4'
     art= pyfiglet.figlet_format(T, font="bulbhead")
     print(art)
-    print("Welcome to Connect 4!")
     play_game()
