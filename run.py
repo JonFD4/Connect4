@@ -193,21 +193,21 @@ def evaluate_game_state(board, piece):
 
 
 def play_game():
-   
-    #Runs the game
-  
+    # Runs the game
     while True:
         print("Welcome to Connect 4!")
         print("1. Start Game")
         print("2. Exit")
         choice = int(input("Enter your choice: \t"))
+
         if choice == 1:
             board = create_board()
             print_board(board)
 
             player_turn = 1
+            game_ongoing = True
 
-            while True:
+            while game_ongoing:
                 while True:
                     try:
                         col = int(input(f"Player {player_turn}, choose a column (1 - 7): ")) - 1
@@ -224,9 +224,9 @@ def play_game():
                 if winning_move(board, piece):
                     print(f"Player {piece} wins!!")
                     game_ongoing = False
-                    break  # Exit the inner loop if there's a winner
+                    break   #Exit the inner loop if there's a winner
 
-                    # Evaluate the current board state
+                # Evaluate the current board state
                 current_score = evaluate_game_state(board, piece)
                 print(f"Score for Player {piece}: {current_score}")
 
@@ -236,7 +236,8 @@ def play_game():
                 play_again = input("Do you want to play again? (yes/no): ").lower()
                 if play_again != 'yes':
                     print("Thanks for playing! Exiting...")
-                    break  # Exit the outer loop if players don't want to play again
+                    game_ongoing = False  # Exit the inner loop if players don't want to play again
+
         elif choice == 2:
             print("Exiting the game. Goodbye!")
             sys.exit()
