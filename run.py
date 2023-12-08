@@ -43,6 +43,17 @@ def is_valid_location(board, col):
     return board[ROW_COUNT - 1][col] == 0
 
 def get_next_open_row(board, col):
+    """
+    Get the index of the next available (empty) row in the specified column.
+
+    Parameters:
+    - board: The game board represented as a 2D NumPy array.
+    - col: The column for which to find the next available row.
+
+    Returns:
+    The index of the next available row in the specified column, or None if the
+    column is already full.
+    """
     for r in range(ROW_COUNT - 1, -1, -1):
         if board[r][col] == 0:
             return r
