@@ -33,7 +33,10 @@ def drop_piece(board, row, col, piece):
     - col: The column where the piece will be placed.
     - piece: The game piece to be placed ('A' or '0').
     '''
-    board[row][col] = piece
+    for row in range(ROW_COUNT - 1, -1, -1):
+        if board[row][col] == 0:
+             board[row][col] = piece
+             break
 
 def is_valid_location(board, col):
     return board[ROW_COUNT - 1][col] == 0
@@ -57,36 +60,40 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
 
     # Find the maximum length of row labels to determine spacing
     max_row_label_length = max(len(label) for label in row_labels)
+    #column_spacing = 3
+    # Initialize background colors
+    player_backgrounds = [Back.YELLOW, Back.BLUE]
 
     # Print rows with row labels on the left side
     for i, row in enumerate(board):
         row_label = row_labels[i].ljust(max_row_label_length)
-        print(f"{row_label} |", end="")
-        
+        print(f"{row_label} |", end=" ")
+
         for j, cell in enumerate(row):
             if game_ongoing and last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
                 # Highlight the last moved cell with a different background color
-                if cell == 1:
-                    print(Back.YELLOW + f" {cell} ", end="")
-                elif cell == 2:
-                    print(Back.BLUE + f" {cell} ", end="")
+                player_index = cell - 1  # Player 1 has index 0, Player 2 has index 1
+                print(f"{player_backgrounds[player_index]}{Fore.RESET} {cell} {Fore.RESET}", end="")
             else:
-                print(f" {cell} ", end="  ")
+                player_index = cell - 1 if cell in [1, 2] else None
+                background_color = player_backgrounds[player_index] if player_index is not None else ''
+                print(f"{background_color} {cell} {Fore.RESET}", end=" ")
+
         print(Fore.RESET + "|")  # Reset color after printing each row
 
     # Print separator line
-    print(' ' + '-----'.join([''] * (COLUMN_COUNT + 1)))
+    print('   ' + '----'.join([''] * (COLUMN_COUNT + 1)))
 
     # Print column labels beneath the rows
-    col_label_line = ' ' + '    '.join(col_labels)
-    print(col_label_line)
+    col_label_line = ' ' + '   '.join(col_labels)
+    print(" "+col_label_line)
     print()
 
 def winning_move(board, piece):
     """
-    check for winning combination in horizontal, vertical and 
-    negatively and positively sloped diagonals, respectively
-    I f no winning combination is found then the function returns false.
+    Check for a winning combination in horizontal, vertical, and 
+    negatively and positively sloped diagonals, respectively.
+    If no winning combination is found, then the function returns false.
     """
     for c in range(COLUMN_COUNT - 3):
         for r in range(ROW_COUNT):
@@ -132,26 +139,26 @@ def winning_move(board, piece):
 
 def score_window(window, piece):
     """
-    This function evaluates window of position in the game.
+    This function evaluates a window of positions in the game.
     It calculates a score for a given "window" in a Connect Four game
-   to evaluate the strength of a particular configuration of four adjacent 
-   positions in the game grid.
+    to evaluate the strength of a particular configuration of four adjacent 
+    positions in the game grid.
 
-   Notably, the scores are arbitrary and used simply to quantify the strengths of the four configurations.
+    Notably, the scores are arbitrary and used simply to quantify the strengths of the four configurations.
     """
     
     score = 0
     opponent_piece = 1 if piece == 2 else 2
-    # check if all positions contain a player's piece and 100 to score
+    # Check if all positions contain a player's piece and add 100 to the score
     if window.count(piece) == 4:
-        score+=100
-    # check if there are three occurences of a player's piece and one empty. A potential win gets 5
+        score += 100
+    # Check if there are three occurrences of a player's piece and one empty. A potential win gets 5
     elif window.count(piece) == 3 and window.count(0) == 1:
-        score+=5
-    # check if there are two occurences and two empty. Less likely to win. Add 2 to score
+        score += 5
+    # Check if there are two occurrences and two empty. Less likely to win. Add 2 to the score
     elif window.count(piece) == 2 and window.count(0) == 2:
         score += 2
-    #If there are three occurrences of the opponent's piece and one empty position (0), subtract 4 from the score.
+    # If there are three occurrences of the opponent's piece and one empty position (0), subtract 4 from the score
     if window.count(opponent_piece) == 3 and window.count(0) == 1:
         score -= 4
 
@@ -161,7 +168,7 @@ def score_window(window, piece):
 def evaluate_game_state(board, piece):
     score = 0
 
-    # Evaluate center column
+    # Evaluate the center column
     center_list = [int(i) for i in list(board[:, COLUMN_COUNT // 2])]
     center_list_count = center_list.count(piece)
     score += center_list_count * 3
@@ -191,9 +198,8 @@ def evaluate_game_state(board, piece):
     return score
 
 
-
 def play_game():
-    # Runs the game
+    # Run the game
     while True:
         print("Welcome to Connect 4!")
         print("1. Start Game")
@@ -224,7 +230,7 @@ def play_game():
                 if winning_move(board, piece):
                     print(f"Player {piece} wins!!")
                     game_ongoing = False
-                    break   #Exit the inner loop if there's a winner
+                    break  # Exit the inner loop if there's a winner
 
                 # Evaluate the current board state
                 current_score = evaluate_game_state(board, piece)
@@ -233,10 +239,11 @@ def play_game():
                 # Switch to the other player's turn
                 player_turn = 3 - player_turn  # Alternates between 1 and 2
 
-                play_again = input("Do you want to play again? (yes/no): ").lower()
-                if play_again != 'yes':
-                    print("Thanks for playing! Exiting...")
-                    game_ongoing = False  # Exit the inner loop if players don't want to play again
+            play_again = input("Do you want to play again? (yes/no): ").lower()
+            if play_again != 'yes':
+                print("Thanks for playing! Exiting...")
+                game_ongoing = False  # Exit the inner loop if players don't want to play again
+                break
 
         elif choice == 2:
             print("Exiting the game. Goodbye!")
