@@ -33,18 +33,30 @@ def drop_piece(board, row, col, piece):
     - col: The column where the piece will be placed.
     - piece: The game piece to be placed ('A' or '0').
     '''
-    for row in range(ROW_COUNT - 1, -1, -1):
-        if board[row][col] == 0:
-             board[row][col] = piece
-             break
-
+   
+    for r in range(ROW_COUNT - 1, -1, -1):
+            if board[r][col] == 0:
+                board[r][col] = piece
+                break
+            
 def is_valid_location(board, col):
     return board[ROW_COUNT - 1][col] == 0
 
 def get_next_open_row(board, col):
-    for r in range(ROW_COUNT):
+    for r in range(ROW_COUNT - 1, -1, -1):
         if board[r][col] == 0:
             return r
+
+
+def get_valid_columns(board):
+    """
+    Get a list of valid column indices where a player can make a move.
+    """
+    valid_columns = []
+    for col in range(COLUMN_COUNT):
+        if is_valid_location(board, col):
+            valid_columns.append(col)
+    return valid_columns
 
 def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True):
     """
@@ -164,7 +176,6 @@ def score_window(window, piece):
 
     return score
 
-
 def evaluate_game_state(board, piece):
     score = 0
 
@@ -197,6 +208,11 @@ def evaluate_game_state(board, piece):
 
     return score
 
+def is_game_over(board):
+    """
+    Check if the game is over by either a player winning or the board being full.
+    """
+    return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
 
 def play_game():
     # Run the game
@@ -214,10 +230,15 @@ def play_game():
             game_ongoing = True
 
             while game_ongoing:
+                valid_columns = get_valid_columns(board)
+
                 while True:
                     try:
                         col = int(input(f"Player {player_turn}, choose a column (1 - 7): ")) - 1
-                        break
+                        if col in valid_columns:
+                            break
+                        else:
+                            print("Invalid choice. Please choose a valid column.")
                     except ValueError:
                         print('Invalid choice- must be value 1-7')
 
@@ -231,6 +252,11 @@ def play_game():
                     print(f"Player {piece} wins!!")
                     game_ongoing = False
                     break  # Exit the inner loop if there's a winner
+
+                if is_game_over(board):
+                    print("It's a tie!")
+                    game_ongoing = False
+                    break
 
                 # Evaluate the current board state
                 current_score = evaluate_game_state(board, piece)
