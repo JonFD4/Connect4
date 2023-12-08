@@ -139,14 +139,20 @@ def play_game():
         print("1. Start Game")
         print("2. Exit")
         choice = int(input("Enter your choice: \n"))
-        if choice == 1 :
+        if choice == 1:
             board = create_board()
             print_board(board)
 
             player_turn = 1
 
             while True:
-                col = int(input(f"Player {player_turn}, choose a column (1:A to 7:G): ")) - 1
+                while True:
+                    try:
+                        col = int(input(f"Player {player_turn}, choose a column (1 - 7): ")) - 1
+                        break
+                    except ValueError:
+                        print('Invalid choice- must be value 1-7')
+
                 row = get_next_open_row(board, col)
                 piece = player_turn
                 drop_piece(board, row, col, piece)
@@ -161,19 +167,18 @@ def play_game():
                 # Switch to the other player's turn
                 player_turn = 3 - player_turn  # Alternates between 1 and 2
 
-            play_again = input("Do you want to play again? (yes/no): ").lower()
-            if play_again != 'yes':
-                print("Thanks for playing! Exiting...")
-                break  # Exit the outer loop if players don't want to play again
-        elif choice == "2":
+                play_again = input("Do you want to play again? (yes/no): ").lower()
+                if play_again != 'yes':
+                    print("Thanks for playing! Exiting...")
+                    break  # Exit the outer loop if players don't want to play again
+        elif choice == 2:
             print("Exiting the game. Goodbye!")
             sys.exit()
-
         else:
             print("Invalid choice. Please enter 1 or 2.")
 
 if __name__ == "__main__":
-    T= 'CONNECT 4'
-    art= pyfiglet.figlet_format(T, font="bulbhead")
+    T = 'CONNECT 4'
+    art = pyfiglet.figlet_format(T, font="bulbhead")
     print(art)
     play_game()
