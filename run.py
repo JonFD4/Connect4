@@ -130,15 +130,77 @@ def winning_move(board, piece):
 
     return False
 
+def score_window(window, piece):
+    """
+    This function evaluates window of position in the game.
+    It calculates a score for a given "window" in a Connect Four game
+   to evaluate the strength of a particular configuration of four adjacent 
+   positions in the game grid.
+
+   Notably, the scores are arbitrary and used simply to quantify the strengths of the four configurations.
+    """
+    
+    score = 0
+    opponent_piece = 1 if piece == 2 else 2
+    # check if all positions contain a player's piece and 100 to score
+    if window.count(piece) == 4:
+        score+=100
+    # check if there are three occurences of a player's piece and one empty. A potential win gets 5
+    elif window.count(piece) == 3 and window.count(0) == 1:
+        score+=5
+    # check if there are two occurences and two empty. Less likely to win. Add 2 to score
+    elif window.count(piece) == 2 and window.count(0) == 2:
+        score += 2
+    #If there are three occurrences of the opponent's piece and one empty position (0), subtract 4 from the score.
+    if window.count(opponent_piece) == 3 and window.count(0) == 1:
+        score -= 4
+
+    return score
+
+
+def evaluate_game_state(board, piece):
+    score = 0
+
+    # Evaluate center column
+    center_list = [int(i) for i in list(board[:, COLUMN_COUNT // 2])]
+    center_list_count = center_list.count(piece)
+    score += center_list_count * 3
+
+    # Evaluate rows, columns, and diagonals
+    for r in range(ROW_COUNT):
+        for c in range(COLUMN_COUNT):
+            # Evaluate rows
+            if c <= COLUMN_COUNT - 4:
+                row_window = [int(board[r][c + i]) for i in range(4)]
+                score += score_window(row_window, piece)
+
+            # Evaluate columns
+            if r <= ROW_COUNT - 4:
+                col_window = [int(board[r + i][c]) for i in range(4)]
+                score += score_window(col_window, piece)
+
+            # Evaluate diagonals
+            if c <= COLUMN_COUNT - 4 and r <= ROW_COUNT - 4:
+                diagonal_up_window = [int(board[r + i][c + i]) for i in range(4)]
+                score += score_window(diagonal_up_window, piece)
+
+            if c <= COLUMN_COUNT - 4 and r >= 3:
+                diagonal_down_window = [int(board[r - i][c + i]) for i in range(4)]
+                score += score_window(diagonal_down_window, piece)
+
+    return score
+
+
+
 def play_game():
-    """
-    Runs the game
-    """
+   
+    #Runs the game
+  
     while True:
         print("Welcome to Connect 4!")
         print("1. Start Game")
         print("2. Exit")
-        choice = int(input("Enter your choice: \n"))
+        choice = int(input("Enter your choice: \t"))
         if choice == 1:
             board = create_board()
             print_board(board)
@@ -163,6 +225,10 @@ def play_game():
                     print(f"Player {piece} wins!!")
                     game_ongoing = False
                     break  # Exit the inner loop if there's a winner
+
+                    # Evaluate the current board state
+                current_score = evaluate_game_state(board, piece)
+                print(f"Score for Player {piece}: {current_score}")
 
                 # Switch to the other player's turn
                 player_turn = 3 - player_turn  # Alternates between 1 and 2
