@@ -231,6 +231,8 @@ def is_game_over(board):
     Check if the game is over by either a player winning or the board being full.
     """
     return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
+def play_against_computer():
+    pass
 
 def play_game():
     # Run the game
