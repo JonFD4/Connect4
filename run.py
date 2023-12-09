@@ -83,6 +83,7 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
     - last_move_row: The row of the last moved piece.
     - last_move_col: The column of the last moved piece.
     """
+
     col_labels = [str(i + 1) for i in range(COLUMN_COUNT)]
     row_labels = [string.ascii_lowercase[i] for i in range(ROW_COUNT)]
 
@@ -92,7 +93,8 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
     # Initialize background colors
     player_backgrounds = [Back.YELLOW, Back.BLUE]
 
-    # Print rows with row labels on the left side
+    # Print rows with row labels on the left side1
+
     for i, row in enumerate(board):
         row_label = row_labels[i].ljust(max_row_label_length)
         print(f"{row_label} |", end=" ")
@@ -101,13 +103,13 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
             if game_ongoing and last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
                 # Highlight the last moved cell with a different background color
                 player_index = cell - 1  # Player 1 has index 0, Player 2 has index 1
-                print(f"{player_backgrounds[player_index]}{Fore.RESET} {cell} {Fore.RESET}", end="")
+                print(f"{player_backgrounds[player_index]}{Fore.RESET} {cell} {Fore.RESET}", end=" ")
             else:
                 player_index = cell - 1 if cell in [1, 2] else None
                 background_color = player_backgrounds[player_index] if player_index is not None else ''
                 print(f"{background_color} {cell} {Fore.RESET}", end=" ")
 
-        print(Fore.RESET + "|")  # Reset color after printing each row
+        print(Fore.RESET + " |")  # Reset color after printing each row
 
     # Print separator line
     print('   ' + '----'.join([''] * (COLUMN_COUNT + 1)))
@@ -236,10 +238,11 @@ def play_game():
         print("Welcome to Connect 4!")
         print("1. Start Game")
         print("2. Exit")
-        choice = int(input("Enter your choice: \t"))
+        choice = int(input("Enter your choice: \n"))
 
         if choice == 1:
             board = create_board()
+            print("You will be playing against Computer who is player 2\n")
             print_board(board)
 
             player_turn = 1
