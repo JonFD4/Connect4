@@ -250,18 +250,18 @@ def play_game():
 
                 while True:
                     try:
-                        col = int(input(f"Player {player_turn}, choose a column (1 - 7): ")) - 1
-                        if col in valid_columns:
+                        col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
+                        if col == -1:
+                            print("Exiting the game. Goodbye!")
+                            sys.exit()
+                        elif col in valid_columns:
                             break
                         else:
                             print("Invalid choice. Please choose a valid column.")
                     except ValueError:
-                        print('Invalid choice- must be value 1-7')
+                            print('Invalid choice- must be value 1-7')
 
-                if col == -1:  # User chose to exit
-                    print("Exiting the game. Goodbye!")
-                    sys.exit()
-                    
+
                 row = get_next_open_row(board, col)
                 piece = player_turn
                 drop_piece(board, row, col, piece)
