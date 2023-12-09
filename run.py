@@ -40,7 +40,12 @@ def drop_piece(board, row, col, piece):
                 break
             
 def is_valid_location(board, col):
-    return board[ROW_COUNT - 1][col] == 0
+     """
+     Function to check if any cell in a specified column has a value of 0.
+     It checks each row in the specified column to see if any cell has a value of 0.
+     If it finds at least one zero, the column is considered valid for placing a piece.
+     """
+     return any(board[r][col] == 0 for r in range(ROW_COUNT))
 
 def get_next_open_row(board, col):
     """
