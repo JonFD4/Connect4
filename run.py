@@ -258,6 +258,10 @@ def play_game():
                     except ValueError:
                         print('Invalid choice- must be value 1-7')
 
+                if col == -1:  # User chose to exit
+                    print("Exiting the game. Goodbye!")
+                    sys.exit()
+                    
                 row = get_next_open_row(board, col)
                 piece = player_turn
                 drop_piece(board, row, col, piece)
