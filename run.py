@@ -6,6 +6,7 @@ import sys
 import math
 import random
 import string
+import time
 
 # Initialize Colorama
 init(autoreset=True)
@@ -33,19 +34,18 @@ def drop_piece(board, row, col, piece):
     - col: The column where the piece will be placed.
     - piece: The game piece to be placed ('A' or '0').
     '''
-   
     for r in range(ROW_COUNT - 1, -1, -1):
-            if board[r][col] == 0:
-                board[r][col] = piece
-                break
-            
+        if board[r][col] == 0:
+            board[r][col] = piece
+            break
+
 def is_valid_location(board, col):
-     """
-     Function to check if any cell in a specified column has a value of 0.
-     It checks each row in the specified column to see if any cell has a value of 0.
-     If it finds at least one zero, the column is considered valid for placing a piece.
-     """
-     return any(board[r][col] == 0 for r in range(ROW_COUNT))
+    """
+    Function to check if any cell in a specified column has a value of 0.
+    It checks each row in the specified column to see if any cell has a value of 0.
+    If it finds at least one zero, the column is considered valid for placing a piece.
+    """
+    return any(board[r][col] == 0 for r in range(ROW_COUNT))
 
 def get_next_open_row(board, col):
     """
@@ -62,7 +62,6 @@ def get_next_open_row(board, col):
     for r in range(ROW_COUNT - 1, -1, -1):
         if board[r][col] == 0:
             return r
-
 
 def get_valid_columns(board):
     """
@@ -83,18 +82,16 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
     - last_move_row: The row of the last moved piece.
     - last_move_col: The column of the last moved piece.
     """
-
     col_labels = [str(i + 1) for i in range(COLUMN_COUNT)]
     row_labels = [string.ascii_lowercase[i] for i in range(ROW_COUNT)]
 
     # Find the maximum length of row labels to determine spacing
     max_row_label_length = max(len(label) for label in row_labels)
-    #column_spacing = 3
+
     # Initialize background colors
     player_backgrounds = [Back.YELLOW, Back.BLUE]
 
-    # Print rows with row labels on the left side1
-
+    # Print rows with row labels on the left side
     for i, row in enumerate(board):
         row_label = row_labels[i].ljust(max_row_label_length)
         print(f"{row_label} |", end=" ")
@@ -116,7 +113,7 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
 
     # Print column labels beneath the rows
     col_label_line = ' ' + '   '.join(col_labels)
-    print(" "+col_label_line)
+    print(" " + col_label_line)
     print()
 
 def winning_move(board, piece):
@@ -176,9 +173,9 @@ def score_window(window, piece):
 
     Notably, the scores are arbitrary and used simply to quantify the strengths of the four configurations.
     """
-    
     score = 0
     opponent_piece = 1 if piece == 2 else 2
+
     # Check if all positions contain a player's piece and add 100 to the score
     if window.count(piece) == 4:
         score += 100
@@ -231,20 +228,89 @@ def is_game_over(board):
     Check if the game is over by either a player winning or the board being full.
     """
     return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
+
+def get_computer_move(board):
+    """
+    Generate a random valid move for the computer player.
+    """
+    valid_columns = get_valid_columns(board)
+    return random.choice(valid_columns)
+
 def play_against_computer():
-    pass
+    board = create_board()
+    print("You are playing against the Computer (Player 2)\n")
+    print_board(board)
+
+    player_turn = 1
+    game_ongoing = True
+
+    while game_ongoing:
+        valid_columns = get_valid_columns(board)
+
+        while True:
+            try:
+                if player_turn == 1:
+                    col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
+                    if col == -1:
+                        print("Exiting the game. Goodbye!")
+                        sys.exit()
+                else:
+                    # Computer's turn
+                    print("Computer is thinking...")
+                    time.sleep(1)  # Introduce a delay to make the computer's move more visible
+                    col = get_computer_move(board)
+                    print(f"Computer chooses column {col + 1}")
+
+                if col in valid_columns:
+                    break
+                else:
+                    print("Invalid choice. Please choose a valid column.")
+            except ValueError:
+                print('Invalid choice- must be value 1-7')
+
+        row = get_next_open_row(board, col)
+        piece = player_turn
+        drop_piece(board, row, col, piece)
+
+        print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
+
+        if winning_move(board, piece):
+            if player_turn == 1:
+                print(f"Player {piece} wins!!")
+            else:
+                print("Computer wins!")
+            game_ongoing = False
+            break  # Exit the inner loop if there's a winner
+
+        if is_game_over(board):
+            print("It's a tie!")
+            game_ongoing = False
+            break
+
+        # Evaluate the current board state
+        current_score = evaluate_game_state(board, piece)
+        print(f"Score for Player {piece}: {current_score}")
+
+        # Switch to the other player's turn
+        player_turn = 3 - player_turn  # Alternates between 1 and 2
+
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again != 'yes':
+        print("Thanks for playing! Exiting...")
+        game_ongoing = False  # Exit the inner loop if players don't want to play again
 
 def play_game():
     # Run the game
     while True:
         print("Welcome to Connect 4!")
-        print("1. Start Game")
-        print("2. Exit")
+        print("1. Play with Friend")
+        print("2. Play against Computer")
+        print("3. Exit")
         choice = int(input("Enter your choice: \n"))
 
         if choice == 1:
             board = create_board()
-            print("You will be playing against Computer who is player 2\n")
+            print("You will be playing against your friend\n")
             print_board(board)
 
             player_turn = 1
@@ -264,8 +330,7 @@ def play_game():
                         else:
                             print("Invalid choice. Please choose a valid column.")
                     except ValueError:
-                            print('Invalid choice- must be value 1-7')
-
+                        print('Invalid choice- must be value 1-7')
 
                 row = get_next_open_row(board, col)
                 piece = player_turn
@@ -295,12 +360,13 @@ def play_game():
                 print("Thanks for playing! Exiting...")
                 game_ongoing = False  # Exit the inner loop if players don't want to play again
                 break
-
         elif choice == 2:
+            play_against_computer()
+        elif choice == 3:
             print("Exiting the game. Goodbye!")
             sys.exit()
         else:
-            print("Invalid choice. Please enter 1 or 2.")
+            print("Invalid choice. Please enter 1, 2, or 3.")
 
 if __name__ == "__main__":
     T = 'CONNECT 4'
