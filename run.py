@@ -266,7 +266,7 @@ def get_computer_move(board):
 
 def play_against_computer():
     board = create_board()
-    print(format_text_line(COMPUTER_RULES) + "\n " )
+    print(format_text_line(COMPUTER_RULES,width) + "\n " )
     print("You are playing against the Computer (Player 2)\n")
     print_board(board)
 
