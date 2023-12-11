@@ -112,8 +112,8 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
     print('   ' + '----'.join([''] * (COLUMN_COUNT + 1)))
 
     # Print column labels beneath the rows
-    col_label_line = ' ' + '   '.join(col_labels)
-    print(" " + col_label_line)
+    col_label_line = '  ' + '   '.join(col_labels)
+    print("  " + " " + col_label_line)
     print()
 
 def winning_move(board, piece):
