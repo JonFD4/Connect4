@@ -13,24 +13,34 @@ init(autoreset=True)
 
 # Define constants
 ROW_COUNT, COLUMN_COUNT = 6, 7
-PERSON_RULES= """
-1. This game is played on a vertical grid with 6 rows and 7 columns. \n
-2. Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.\n
-3. The piece will fall to the lowest available position within the chosen column. \n
-4. The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\n
-5. Once a player has achieved a connect four, they win the game!\n
-6. If all the columns are filled without a connect four, the game ends in a draw.
-"""
-COMPUTER_RULES= """
-1. This game is played on a vertical grid with 6 rows and 7 columns. \n
-2.  You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.\n
-3. The piece will fall to the lowest available position within the chosen column.\n
-4. The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\n
-5. Once you or the computer has achieved a connect four, either one of you is the winner!\n
-6. If all the columns are filled without a connect four, the game ends in a draw. \n
-"""
 
+# Define and formatting rules
+width = 40
+PERSON_RULES= """This game is played on a vertical grid with 6 rows and 7 columns. 
+Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.
+The piece will fall to the lowest available position within the chosen column. 
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
+Once a player has achieved a connect four, they win the game!
+If all the columns are filled without a connect four, the game ends in a draw."""
 
+COMPUTER_RULES= """This game is played on a vertical grid with 6 rows and 7 columns.
+You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.
+The piece will fall to the lowest available position within the chosen column.
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
+Once you or the computer has achieved a connect four, either one of you is the winner!
+If all the columns are filled without a connect four, the game ends in a draw. """
+
+def format_text_line(text, width):
+    """
+   This function loops through text and turns into a numbered list based on the number of lines
+    """
+    lines = text.split("\n")
+
+    numbered_lines = ""
+    for i, line in enumerate(lines, start=1):
+        listed_lines = textwrap.fill(line,width)
+        numbered_lines += f"{i}. {listed_lines} \n \n" 
+    return numbered_lines.strip()
 
 def create_board():
     """
@@ -256,7 +266,7 @@ def get_computer_move(board):
 
 def play_against_computer():
     board = create_board()
-    print(COMPUTER_RULES.center(5))
+    print(format_text_line(COMPUTER_RULES) + "\n " )
     print("You are playing against the Computer (Player 2)\n")
     print_board(board)
 
@@ -330,7 +340,7 @@ def play_game():
         if choice == 1:
             board = create_board()
             print("You will be playing against your friend\n")
-            print(PERSON_RULES)
+            print(format_text_line(PERSON_RULES,width) + "\n ")
             print_board(board)
 
             player_turn = 1
