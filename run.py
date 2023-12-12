@@ -335,7 +335,11 @@ def play_game():
         print("1. Play with Friend")
         print("2. Play against Computer")
         print("3. Exit")
-        choice = int(input("Enter your choice: \n"))
+        try:
+            choice = int(input("Enter your choice: \n"))
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            continue
 
         if choice == 1:
             board = create_board()
