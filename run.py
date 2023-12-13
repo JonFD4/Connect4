@@ -15,7 +15,7 @@ init(autoreset=True)
 ROW_COUNT, COLUMN_COUNT = 6, 7
 
 # Define and formatting rules
-width = 40
+width = 50
 PERSON_RULES= """This game is played on a vertical grid with 6 rows and 7 columns. 
 Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.
 The piece will fall to the lowest available position within the chosen column. 
@@ -288,7 +288,7 @@ def play_against_computer():
                     print("Computer is thinking...")
                     time.sleep(1)  # Introduce a delay to make the computer's move more visible
                     col = get_computer_move(board)
-                    print(f"Computer chooses column {col + 1}")
+                    print(f"Computer chooses column {col + 1} \n")
 
                 if col in valid_columns:
                     break
@@ -318,27 +318,38 @@ def play_against_computer():
 
         # Evaluate the current board state
         current_score = evaluate_game_state(board, piece)
-        print(f"Score for Player {piece}: {current_score}")
+        print(f"Player {piece} dropped a piece in column {col + 1}")
+        print(f"Score for Player {piece}: {current_score }\n")
 
         # Switch to the other player's turn
         player_turn = 3 - player_turn  # Alternates between 1 and 2
 
-    play_again = input("Do you want to play again? (yes/no): ").lower()
-    if play_again != 'yes':
-        print("Thanks for playing! Exiting...")
-        game_ongoing = False  # Exit the inner loop if players don't want to play again
+    while True:
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        while play_again not in ['yes', 'no']:
+            print("Invalid input. Please enter 'yes' or 'no'")
+            play_again = input("Do you want to play again? (yes/no): ").lower()
+
+        if play_again == 'no':
+            print("Thanks for playing! Exiting...")
+            sys.exit()
+            break  # Exit the outer loop if players don't want to play again
+
+        else:
+            print(art)
+            play_game()
 
 def play_game():
     # Run the game
     while True:
-        print("Welcome to Connect 4!")
+        print("Welcome to Connect 4! \n")
         print("1. Play with Friend")
         print("2. Play against Computer")
-        print("3. Exit")
+        print("3. Exit \n")
         try:
             choice = int(input("Enter your choice: \n"))
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("Invalid input. Please enter a number.\n")
             continue
 
         if choice == 1:
@@ -373,27 +384,38 @@ def play_game():
                 print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
 
                 if winning_move(board, piece):
-                    print(f"Player {piece} wins!!")
+                    print(f"Player {piece} wins!!\n")
                     game_ongoing = False
                     break  # Exit the inner loop if there's a winner
 
                 if is_game_over(board):
-                    print("It's a tie!")
+                    print("It's a tie! \n")
                     game_ongoing = False
                     break
 
                 # Evaluate the current board state
                 current_score = evaluate_game_state(board, piece)
-                print(f"Score for Player {piece}: {current_score}")
+                print(f"Player {piece} dropped a piece in column {col + 1}")
+                print(f"Score for Player {piece}: {current_score} \n")
 
                 # Switch to the other player's turn
                 player_turn = 3 - player_turn  # Alternates between 1 and 2
+            while True:
+                play_again = input("Do you want to play again? (yes/no): ").lower()
+                while play_again not in ['yes', 'no']:
+                    print("Invalid input. Please enter 'yes' or 'no'")
+                    play_again = input("Do you want to play again? (yes/no): ").lower()
 
-            play_again = input("Do you want to play again? (yes/no): ").lower()
-            if play_again != 'yes':
-                print("Thanks for playing! Exiting...")
-                game_ongoing = False  # Exit the inner loop if players don't want to play again
-                break
+                if play_again == 'no':
+                    print("Thanks for playing! Exiting...")
+                    sys.exit()
+                    break  # Exit the outer loop if players don't want to play again
+
+                else:
+                    print(art)
+                    play_game()
+
+
         elif choice == 2:
             play_against_computer()
         elif choice == 3:
