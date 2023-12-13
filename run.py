@@ -256,88 +256,106 @@ def is_game_over(board):
     Check if the game is over by either a player winning or the board being full.
     """
     return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
-
 def get_computer_move(board):
-    """
-    Generate a random valid move for the computer player.
-    """
-    valid_columns = get_valid_columns(board)
-    return random.choice(valid_columns)
-
-def play_against_computer():
-    board = create_board()
-    print(format_text_line(COMPUTER_RULES,width) + "\n " )
-    print("You are playing against the Computer (Player 2)\n")
-    print_board(board)
-
-    player_turn = 1
-    game_ongoing = True
-
-    while game_ongoing:
+        """
+        Generate a random valid move for the computer player.
+        """
         valid_columns = get_valid_columns(board)
 
-        while True:
-            try:
-                if player_turn == 1:
-                    col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
-                    if col == -1:
-                        print("Exiting the game. Goodbye!")
-                        sys.exit()
-                else:
-                    # Computer's turn
-                    print("Computer is thinking...")
-                    time.sleep(1)  # Introduce a delay to make the computer's move more visible
-                    col = get_computer_move(board)
-                    print(f"Computer chooses column {col + 1} \n")
+        # Check for winning moves
+        for col in valid_columns:
+            row = get_next_open_row(board, col)
+            board_copy = [row[:] for row in board]
+            drop_piece(board_copy, row, col, 2)
+            if winning_move(board_copy, 2):
+                return col
 
-                if col in valid_columns:
-                    break
-                else:
-                    print("Invalid choice. Please choose a valid column.")
-            except ValueError:
-                print('Invalid choice- must be value 1-7')
+        # Check for blocking player's winning moves
+        for col in valid_columns:
+            row = get_next_open_row(board, col)
+            board_copy = [row[:] for row in board]
+            drop_piece(board_copy, row, col, 1)
+            if winning_move(board_copy, 1):
+                return col
 
-        row = get_next_open_row(board, col)
-        piece = player_turn
-        drop_piece(board, row, col, piece)
+        # If no winning or blocking moves, choose a random valid move
+        return random.choice(valid_columns)
 
-        print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
-
-        if winning_move(board, piece):
-            if player_turn == 1:
-                print(f"Player {piece} wins!!")
-            else:
-                print("Computer wins!")
-            game_ongoing = False
-            break  # Exit the inner loop if there's a winner
-
-        if is_game_over(board):
-            print("It's a tie!")
-            game_ongoing = False
-            break
-
-        # Evaluate the current board state
-        current_score = evaluate_game_state(board, piece)
-        print(f"Player {piece} dropped a piece in column {col + 1}")
-        print(f"Score for Player {piece}: {current_score }\n")
-
-        # Switch to the other player's turn
-        player_turn = 3 - player_turn  # Alternates between 1 and 2
-
+def play_against_computer():
     while True:
-        play_again = input("Do you want to play again? (yes/no): ").lower()
-        while play_again not in ['yes', 'no']:
-            print("Invalid input. Please enter 'yes' or 'no'")
+        board = create_board()
+        print(format_text_line(COMPUTER_RULES,width) + "\n " )
+        print("You are playing against the Computer (Player 2)\n")
+        print_board(board)
+
+        player_turn = 1
+        game_ongoing = True
+
+        while game_ongoing:
+            valid_columns = get_valid_columns(board)
+
+            while True:
+                try:
+                    if player_turn == 1:
+                        col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
+                        if col == -1:
+                            print("Exiting the game. Goodbye!")
+                            sys.exit()
+                    else:
+                        # Computer's turn
+                        print("Computer is thinking...")
+                        time.sleep(1)  # Introduce a delay to make the computer's move more visible
+                        col = get_computer_move(board)
+                        print(f"Computer chooses column {col + 1} \n")
+
+                    if col in valid_columns:
+                        break
+                    else:
+                        print("Invalid choice. Please choose a valid column.")
+                except ValueError:
+                    print('Invalid choice- must be value 1-7')
+
+            row = get_next_open_row(board, col)
+            piece = player_turn
+            drop_piece(board, row, col, piece)
+
+            print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
+
+            if winning_move(board, piece):
+                if player_turn == 1:
+                    print(f"Player {piece} wins!!")
+                else:
+                    print("Computer wins!")
+                game_ongoing = False
+                break  # Exit the inner loop if there's a winner
+
+            if is_game_over(board):
+                print("It's a tie!")
+                game_ongoing = False
+                break
+
+            # Evaluate the current board state
+            current_score = evaluate_game_state(board, piece)
+            print(f"Player {piece} dropped a piece in column {col + 1}")
+            print(f"Score for Player {piece}: {current_score }\n")
+
+            # Switch to the other player's turn
+            player_turn = 3 - player_turn  # Alternates between 1 and 2
+
+        while True:
             play_again = input("Do you want to play again? (yes/no): ").lower()
+            while play_again not in ['yes', 'no']:
+                print("Invalid input. Please enter 'yes' or 'no'")
+                play_again = input("Do you want to play again? (yes/no): ").lower()
 
-        if play_again == 'no':
-            print("Thanks for playing! Exiting...")
-            sys.exit()
-            break  # Exit the outer loop if players don't want to play again
+            if play_again == 'no':
+                print("Thanks for playing! Exiting...")
+                sys.exit()
+                break  # Exit the outer loop if players don't want to play again
 
-        else:
-            print(art)
-            play_game()
+            else:
+                print(art)
+                play_game()
 
 def play_game():
     # Run the game
