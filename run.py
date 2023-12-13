@@ -257,12 +257,57 @@ def is_game_over(board):
     """
     return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
 
+
+def minimax(board, depth, maximizing_player, alpha, beta):
+    if depth == 0 or is_game_over(board):
+        return evaluate_game_state(board, 2)  # Assuming the computer is always the maximizing player
+
+    valid_columns = get_valid_columns(board)
+
+    if maximizing_player:
+        max_eval = float('-inf')
+        for col in valid_columns:
+            row = get_next_open_row(board, col)
+            temp_board = np.copy(board)
+            drop_piece(temp_board, row, col, 2)  # Assuming the computer is player 2
+            eval = minimax(temp_board, depth - 1, False, alpha, beta)
+            max_eval = max(max_eval, eval)
+            alpha = max(alpha, eval)
+            if beta <= alpha:
+                break
+        return max_eval
+    else:
+        min_eval = float('inf')
+        for col in valid_columns:
+            row = get_next_open_row(board, col)
+            temp_board = np.copy(board)
+            drop_piece(temp_board, row, col, 1)  # Assuming the human player is player 1
+            eval = minimax(temp_board, depth - 1, True, alpha, beta)
+            min_eval = min(min_eval, eval)
+            beta = min(beta, eval)
+            if beta <= alpha:
+                break
+        return min_eval
+
+
 def get_computer_move(board):
     """
     Generate a random valid move for the computer player.
     """
     valid_columns = get_valid_columns(board)
-    return random.choice(valid_columns)
+    best_score = float('-inf')
+    best_move = None
+
+    for col in valid_columns:
+        row = get_next_open_row(board, col)
+        temp_board = np.copy(board)
+        drop_piece(temp_board, row, col, 2)  # Assuming the computer is player 2
+        score = minimax(temp_board, 4, False, float('-inf'), float('inf'))  # Adjust the depth as needed
+        if score > best_score:
+            best_score = score
+            best_move = col
+
+    return best_move
 
 def play_against_computer():
     board = create_board()
