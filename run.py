@@ -260,26 +260,7 @@ def get_computer_move(board):
         """
         Generate a random valid move for the computer player.
         """
-        valid_columns = get_valid_columns(board)
-
-        # Check for winning moves
-        for col in valid_columns:
-            row = get_next_open_row(board, col)
-            board_copy = [row[:] for row in board]
-            drop_piece(board_copy, row, col, 2)
-            if winning_move(board_copy, 2):
-                return col
-
-        # Check for blocking player's winning moves
-        for col in valid_columns:
-            row = get_next_open_row(board, col)
-            board_copy = [row[:] for row in board]
-            drop_piece(board_copy, row, col, 1)
-            if winning_move(board_copy, 1):
-                return col
-
-        # If no winning or blocking moves, choose a random valid move
-        return random.choice(valid_columns)
+        return random.choice(board)
 
 def play_against_computer():
     while True:
