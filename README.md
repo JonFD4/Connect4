@@ -408,4 +408,5 @@ E501 error signifies that code exceeds the maximum line ength specified under PE
 ## Future Features
 - Implement pygame in this code
 - Add varying levels of difficulty to computer play
-
+- Responsive design so that it can work when deployed via cloud-based platform on different screen sizes.
+- Social media integration and communication so that people can play on the same board on different computers.
