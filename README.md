@@ -377,5 +377,33 @@ E501 error signifies that code exceeds the maximum line ength specified under PE
 </details>
 
 ---
+<br>
 
+# Acknowledgements 
+- I would like to thank  Gareth McGirr for his assistance in doing this project. Advice such as adding colorama.
+- I would like to thank Kasia Bogucka of code institute for her advice and support.
+***
 
+ ### Website references
+ <br>
+
+ *Game logic and planning aid*
+  - [How to code connect 4 in python](https://www.youtube.com/watch?v=i_4ZWjmybWs&ab_channel=ShaunHalverson)
+- [Connect four in python](https://www.askpython.com/python/examples/connect-four-game)
+   * This website was helpful and inspiration for the game. It helped with understanding and knowing how to set up the game board.
+-[Logic of connect 4](https://stackoverflow.com/questions/24400057/connect-4-game-logic)
+-[Simple python connect 4](https://codereview.stackexchange.com/questions/225840/a-simple-connect-4-game-in-python)
+
+*Minmaxing and AI logics in game development*
+- [Artificial Intelligence at Play — Connect Four (Mini-max algorithm explained)](https://medium.com/analytics-vidhya/artificial-intelligence-at-play-connect-four-minimax-algorithm-explained-3b5fc32e4a4f)
+- [Minmaxing in Tic-Tac-Toe](https://www.youtube.com/watch?v=trKjYdBASyQ&ab_channel=TheCodingTrain)
+- [Kylie Ying- Tic tac toe](https://www.youtube.com/watch?v=fT3YWCKvuQE&ab_channel=KylieYing)
+- [Minimax Algorithm in game theory](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/)
+
+*Additional features*
+- [How to add time delay](https://www.geeksforgeeks.org/how-to-add-time-delay-in-python/)
+- [How to use pyfiglet](https://www.geeksforgeeks.org/python-ascii-art-using-pyfiglet-module/)
+
+## Future Features
+- Implement pygame in this code
+- Add varying levels of difficulty to computer play
