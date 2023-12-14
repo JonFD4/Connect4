@@ -1,5 +1,6 @@
 # Connect 4 Game Documentation
-# Table of Contents
+
+## Table of Contents
 
 1. [Introduction](#introduction)
     * [Demo](#demo)
@@ -23,7 +24,7 @@
         - [Constraints](#constraints)
 5. [Testing](#testing)
 6. [Credits](#credits)   
-
+---
 ## Introduction
 
 Connect 4 is a classic two-player connection game where players choose a color and take turns dropping colored discs into a grid. The objective is to connect four discs in a row before your opponent does.
@@ -32,8 +33,9 @@ Connect 4 is a classic two-player connection game where players choose a color a
 
 - [Live Site on Heroku](https://connect-4-pp3-f3bf4c65e965.herokuapp.com/)
 - [GitHub Repo](https://github.com/JonFD4/Connect4.git)
+---
 
-## Features
+## Features 
 
 - Text-based interface for easy gameplay.
   - Clean and intuitive user interface.
@@ -41,22 +43,23 @@ Connect 4 is a classic two-player connection game where players choose a color a
 - Interactive grid for dropping pieces.
 - Win detection for vertical, horizontal, and diagonal connections.
 - Clear prompts and visual feedback for an intuitive user experience.
+&nbsp;
+---
+### Objectives
 
-## Objectives
-
-### Developer's goal
+#### Developer's goal
 **Design**
 
 ![Lucid chart planning of game](assets/images/Connect-4-planning.png)
 [Lucid chart planning of game](assets/images/Connect-4-planning.png)
-1. **Game Logic Implementation**
+1. *Game Logic Implementation*
    - Develop the core game logic, including rules and turn handling.
-2. **User Experience**
+2. *User Experience*
    - Create a clean console interface with clear prompts and visual feedback.
-3. **Python Skill Development**
+3. *Python Skill Development*
    - Provide an opportunity to implement and develop Python skills.
 
-### User's goal
+#### User's goal
 
 - Play an online game of logic and strategy.
 - Choose between computer and another user.
@@ -65,63 +68,78 @@ Connect 4 is a classic two-player connection game where players choose a color a
 - Exit the game prematurely if needed.
 - Know the results at the end of the game.
 - Have the option to play again.
-
-## Product Features
-
+---
+### Product Features
+&nbsp;
 
 ![title page](assets/Connect4features/intro-page.png)
     *title and introduction page*
 The 'landing page' used pyfiglet to design an ASCII art of 'Connect 4'.
 There are 3 options provided: the choice of playing with person, computer or simply exiting.
 Underneath is the input that requests user to make a choice.
-
+<br>
+<br>
 
 ![rules page](assets/Connect4features/Rules-page.png)
 
 *Rules page*
 Immediately on entering selection, the rules of game are displayed in a list on screen. The slighty different changes depending on whether user is playing with computer or another person.
-
+<br>
+<br>
 
 ![initial board](assets/Connect4features/initial-board.png)
 
 *Initial board*
 A free board is printed out. At the top is a text that informs user of who they are playing with. A prompt also request user to chose a column.
 The columns and the rows are labelled to make it readable and easy to for players to choose.
-
+<br>
+<br>
 
 ![first-turns](assets/Connect4features/first-piece-drops.png)
 *Turns and color + number representation* In the user vs user play, when each player takes their turn, a piece which is a number with a background color is printed (1/yellow and 2/blue). 
 There slightly different features if it is user vs computer play. "Computer is thinking..." which gives the illusion that computer is taking its time to play. Of course, this delayed response is implemented using the time module.
 Each turn shows what decision a player made.
-
+<br>
+<br>
 
 ![final piece](assets/Connect4features/finalgameboard.png)
 
 *Final piece* 
 The final board shows a beautiful display of blues and yellows and choices that have been made.
 Underneath it is an output that informs who won. This followed by the `play again` query.
-
+<br>
+<br>
 
 
 **Input, Input validation, and Error handling**
-
+<br>
+<br>
 ![start choice](assets/Connect4features/start-choice-error-handling.png)
 *Start choice error handling* The user is immediately prompted if the input is invalid. A message is displayed to inform of wrong input, followed by another input asking for choice.
-
+<br>
+<br>
 
 ![column-choice error handling](assets/Connect4features/error-column-message.png)
 *Wrong column input* Immediately, a response informing user of wrong input, followed by request for input is output for user.
-
+<br>
+<br>
 
 ![play again validation](assets/Connect4features/play-again-validation.png)
-*Play again validation*  play agian feature request either `yes` or `no`. If it is `yes`, they game restarts, displaying the landing page and game mode choices.
 
+*Play again validation*  
+play agian feature request either `yes` or `no`. If it is `yes`, they game restarts, displaying the landing page and game mode choices.
+<br>
+<br>
 
 ![play again error handling](assets/Connect4features/play-again-error-handling.png)
 *play again error handlin*
 If user input the wrong data, the prompt is set up to keep asking until user inserts either `yes` or `no`. 
+---
+<br>
 
-**Exit Strategies**
+<h3>Exit Strategies</h3>
+<br>
+
 ![early exit](assets/Connect4features/premature-exit.png)
 *Early exit* This is the third option that is presented when user is choosing a column. `0` allows user to exit befire game ends. 
 Additionally, this feature is beneficial during early development when developer wants to make certain test without havig to complete the game. `Exiting the game. Goodbye!`
@@ -129,7 +147,7 @@ Additionally, this feature is beneficial during early development when developer
 
 ![play again exit](assets/Connect4features/play-again-exit.png)
 *play again exit* This removes user from the game completely and outputs a message `Thanks for playing! Exiting...`
-
+---
 
 # Getting Started
 
@@ -246,3 +264,84 @@ Things to Remember When Deploying Heroku App
 ### Constraints
 
 The deployment terminal is set to 80 columns by 24 rows. Each line of text needs to be 80 characters or less; otherwise, it will be wrapped onto a second line.
+
+## Testing
+### Validator Testing with Flake8 and fixing
+
+I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
+```bash
+ flake8 run.py
+ ```
+ It returned a long list of errors including, `E501` for line too long.
+ After analysing those lines, I found those line to be neccessarily long. Hence,
+ ```bash
+ flake8 --ignore=E50
+1 run.py
+```
+<details>
+<summary> View errors from flake8</summary>
+
+- run.py:6:1: F401 'random' imported but unused
+- run.py:19:13: E225 missing whitespace around operator
+- run.py:19:83: W291 trailing whitespace
+- run.py:21:79: W291 trailing whitespace
+- run.py:26:15: E225 missing whitespace around operator
+- run.py:33:1: E302 expected 2 blank lines, found 1
+- run.py:41:42: E231 missing whitespace after ','
+- run.py:42:55: W291 trailing whitespace
+- run.py:45:1: E302 expected 2 blank lines, found 1
+- run.py:47:63: W291 trailing whitespace
+- run.py:49:55: W291 trailing whitespace
+- run.py:54:1: E302 expected 2 blank lines, found 1
+- run.py:70:1: E302 expected 2 blank lines, found 1
+- run.py:78:1: E302 expected 2 blank lines, found 1
+- run.py:94:1: E302 expected 2 blank lines, found 1
+- run.py:104:1: E302 expected 2 blank lines, found 1
+- run.py:147:1: E302 expected 2 blank lines, found 1
+- run.py:149:65: W291 trailing whitespace
+- run.py:157:17: W503 line break before binary operator
+- run.py:158:17: W503 line break before binary operator
+- run.py:159:17: W503 line break before binary operator
+- run.py:167:17: W503 line break before binary operator
+- run.py:168:17: W503 line break before binary operator
+- run.py:169:17: W503 line break before binary operator
+- run.py:177:17: W503 line break before binary operator
+- run.py:178:17: W503 line break before binary operator
+- run.py:179:17: W503 line break before binary operator
+- run.py:187:17: W503 line break before binary operator
+- run.py:188:17: W503 line break before binary operator
+- run.py:189:17: W503 line break before binary operator
+- run.py:195:1: E302 expected 2 blank lines, found 1
+
+</details>
+
+
+After fixing my code, I tested to see if everything was working. 
+Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for
+
+<details>
+<summary> Errors retrieved by pycodestyle </summary>
+
+- run.py:19:80: E501 line too long (83 > 79 characters)
+- run.py:20:80: E501 line too long (124 > 79 characters)
+- run.py:22:80: E501 line too long (132 > 79 characters)
+- run.py:24:80: E501 line too long (81 > 79 characters)
+- run.py:26:80: E501 line too long (85 > 79 characters)
+- run.py:27:80: E501 line too long (127 > 79 characters)
+- run.py:29:80: E501 line too long (132 > 79 characters)
+- run.py:30:80: E501 line too long (86 > 79 characters)
+- run.py:31:80: E501 line too long (82 > 79 characters)
+- run.py:36:80: E501 line too long (95 > 79 characters)
+- run.py:77:80: E501 line too long (83 > 79 characters)
+- run.py:78:80: E501 line too long (86 > 79 characters)
+- run.py:136:80: E501 line too long (134 > 79 characters)
+- run.py:139:80: E501 line too long (85 > 79 characters)
+- run.py:141:80: E501 line too long (90 > 79 characters)
+- run.py:145:80: E501 line too long (103 > 79 characters)
+- run.py:215:80: E501 line too long (107 > 79 characters)
+- run.py:276:80: E501 line too long (81 > 79 characters)
+- run.py:355:80: E501 line too long (106 > 79 characters)
+- run.py:450:80: E501 line too long (110 > 79 characters)
+- run.py:457:80: E501 line too long (82 > 79 characters)
+- run.py:499:80: E501 line too long (84 > 79 characters)
+</details>
