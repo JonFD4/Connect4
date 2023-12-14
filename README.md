@@ -294,6 +294,17 @@ I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
  flake8 --ignore=E50
 1 run.py
 ```
+
+
+After fixing my code, I tested to see if everything was working. 
+Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for
+`Running pycodestyle:
+
+```bash
+pycodestyle run.py
+```
+
+
 <details>
 <summary> View errors from flake8</summary>
 
@@ -330,15 +341,7 @@ I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
 - run.py:195:1: E302 expected 2 blank lines, found 1
 
 </details>
-
-
-After fixing my code, I tested to see if everything was working. 
-Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for
-`Running pycodestyle:
-
-```bash
-pycodestyle run.py
-```
+<br>
 <details>
 <summary> Errors retrieved by pycodestyle </summary>
 
@@ -366,6 +369,13 @@ pycodestyle run.py
 - run.py:499:80: E501 line too long (84 > 79 characters)
 </details>
 
+<br>
 
-*Why E501 was ignored?*
+<details>
+ <summary> Why E501 was ignored? </summary>
 E501 error signifies that code exceeds the maximum line ength specified under PEP8 (70 characters for code). I chose to ignore these errors because, the length of line was needed for readability and practicality such as code for creating the rules as a list.
+</details>
+
+---
+
+
