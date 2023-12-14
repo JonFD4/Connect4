@@ -172,15 +172,14 @@ This removes user from the game completely and outputs a message `Thanks for pla
 - Heroku - Deployment and hosting
 
 ### Necessary Imports:
-- colorama (Back, Fore, init)
-- numpy (generate 2D matrix of zeros)
-- pyfiglet (for designing title)
-- sys (provides interaction between developer and runtime environment)
-- random
-- string
-- time
-- textwrap
-
+- Colorama: A Python library for adding colored output to terminal text.
+- pyfiglet: A Python library for creating ASCII art from text.
+- numpy: A powerful library for numerical operations in Python.
+- sys: Provides access to some variables used or maintained by the Python interpreter and functions that interact strongly with the interpreter.
+numbers.
+- string: Provides common string operations.
+- time: Provides functions to work with time.
+- textwrap: Provides convenient functions for formatting text.
 ---
 
 ## Prerequisites and Deployment
