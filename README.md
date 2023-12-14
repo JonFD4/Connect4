@@ -404,6 +404,8 @@ E501 error signifies that code exceeds the maximum line ength specified under PE
 - [How to add time delay](https://www.geeksforgeeks.org/how-to-add-time-delay-in-python/)
 - [How to use pyfiglet](https://www.geeksforgeeks.org/python-ascii-art-using-pyfiglet-module/)
 
+
 ## Future Features
 - Implement pygame in this code
 - Add varying levels of difficulty to computer play
+
