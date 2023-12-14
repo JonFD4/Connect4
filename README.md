@@ -23,11 +23,11 @@
             - [Essential when creating the Heroku app](#Essentials)
         - [Constraints](#constraints)
 5. [Testing](#testing)
-6. [Credits](#credits)   
----
+6. [Acknowledgements](#acknowledgements)
+7. [Future Features](#future-features)
 ## Introduction
 
-Connect 4 is a classic two-player connection game where players choose a color and take turns dropping colored discs into a grid. The objective is to connect four discs in a row before your opponent does.
+Connect 4 is a classic two-player connection game where players choose a colour and take turns dropping coloured discs into a grid. The objective is to connect four discs in a row before your opponent does.
 
 ### Demo
 
@@ -91,14 +91,14 @@ Immediately on entering selection, the rules of game are displayed in a list on 
 
 *Initial board* <br>
 A free board is printed out. At the top is a text that informs user of who they are playing with. A prompt also request user to chose a column.
-The columns and the rows are labelled to make it readable and easy to for players to choose.
+The columns and the rows are labelled to make it readable and easy for players to choose.
 <br>
 <br>
 
 ![first-turns](assets/Connect4features/first-piece-drops.png)
 *Turns and color + number representation* <br>
 In the user vs user play, when each player takes their turn, a piece which is a number with a background color is printed (1/yellow and 2/blue). 
-There slightly different features if it is user vs computer play. "Computer is thinking..." which gives the illusion that computer is taking its time to play. Of course, this delayed response is implemented using the time module.
+There are slightly different features if it is user vs computer play. "Computer is thinking..." which gives the illusion that computer is taking its time to play. Of course, this delayed response is implemented using the time module.
 Each turn shows what decision a player made.
 <br>
 <br>
@@ -107,7 +107,7 @@ Each turn shows what decision a player made.
 
 *Final piece* <br>
 The final board shows a beautiful display of blues and yellows and choices that have been made.
-Underneath it is an output that informs who won. This followed by the `play again` query.
+Underneath it is an output that informs who won. This is followed by the `play again` query.
 
 ---
 <br>
@@ -119,7 +119,7 @@ Underneath it is an output that informs who won. This followed by the `play agai
 
 ![start choice](assets/Connect4features/start-choice-error-handling.png)
 *Start choice error handling* <br>
-The user is immediately prompted if the input is invalid. A message is displayed to inform of wrong input, followed by another input asking for choice.
+The user is immediately prompted if the input is invalid. A message is displayed to inform of wrong input, followed by another input asking for the correct input choices.
 <br>
 <br>
 
@@ -132,13 +132,13 @@ Immediately, a response informing user of wrong input, followed by request for i
 ![play again validation](assets/Connect4features/play-again-validation.png)
 
 *Play again validation*  
-play agian feature request either `yes` or `no`. If it is `yes`, they game restarts, displaying the landing page and game mode choices.
+play agian feature requests either `yes` or `no`. If it is `yes`, the game restarts, displaying the landing page and game mode choices.
 <br>
 <br>
 
 ![play again error handling](assets/Connect4features/play-again-error-handling.png)
 *play again error handlin* <br>
-If user input the wrong data, the prompt is set up to keep asking until user inserts either `yes` or `no`. 
+If user inputs the wrong data, the prompt is set up to keep asking until user inserts either `yes` or `no`. 
 
 ---
 <br>
@@ -149,7 +149,7 @@ If user input the wrong data, the prompt is set up to keep asking until user ins
 ![early exit](assets/Connect4features/premature-exit.png)
 *Early exit* <br>
 This is the third option that is presented when user is choosing a column. `0` allows user to exit befire game ends. 
-Additionally, this feature is beneficial during early development when developer wants to make certain test without havig to complete the game. `Exiting the game. Goodbye!`
+Additionally, this feature is beneficial during early development when developer wants to make certain test without having to complete the game. `Exiting the game. Goodbye!` is the message output.
 
 
 ![play again exit](assets/Connect4features/play-again-exit.png)
@@ -261,7 +261,7 @@ Alternatively (Via terminal):
 ---
 
 ### Essentials 
-Things to Remember When Deploying Heroku App
+Things to remember when deploying Heroku App
 
 - Code must be in the `run.py` file.
 - Dependencies must be in the `requirements.txt` file.
@@ -283,7 +283,7 @@ The deployment terminal is set to 80 columns by 24 rows. Each line of text needs
 ## Testing
 ### Validator Testing with Flake8 and fixing
 
-I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
+I used flake8 to test whether my code fits the pep8 standard. In terminal, I run
 ```bash
  flake8 run.py
  ```
@@ -293,10 +293,11 @@ I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
  flake8 --ignore=E50
 1 run.py
 ```
-
+This printed other errors that needed to be fixed.
 
 After fixing my code, I tested to see if everything was working. 
-Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for
+Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for E501 errors.
+
 `Running pycodestyle:
 
 ```bash
@@ -372,15 +373,15 @@ pycodestyle run.py
 
 <details>
  <summary> Why E501 was ignored? </summary>
-E501 error signifies that code exceeds the maximum line ength specified under PEP8 (70 characters for code). I chose to ignore these errors because, the length of line was needed for readability and practicality such as code for creating the rules as a list.
+E501 error signifies that code exceeds the maximum line length specified under PEP8 (79 characters for code). I chose to ignore these errors because, the length of line was needed for readability and practicality such as code for creating the rules as a list.
 </details>
 
 ---
 <br>
 
 # Acknowledgements 
-- I would like to thank  Gareth McGirr for his assistance in doing this project. Advice such as adding colorama.
-- I would like to thank Kasia Bogucka of code institute for her advice and support.
+- I would like to thank Gareth McGirr for the assistance in doing this project. Advice such as adding colorama.
+- I would like to thank Kasia Bogucka of code institute for the advice and support.
 ***
 
  ### Website references
@@ -389,7 +390,7 @@ E501 error signifies that code exceeds the maximum line ength specified under PE
  *Game logic and planning aid*
   - [How to code connect 4 in python](https://www.youtube.com/watch?v=i_4ZWjmybWs&ab_channel=ShaunHalverson)
 - [Connect four in python](https://www.askpython.com/python/examples/connect-four-game)
-   * This website was helpful and inspiration for the game. It helped with understanding and knowing how to set up the game board.
+   * This website was helpful and an inspiration for the game. It helped with understanding and knowing how to set up the game board.
 -[Logic of connect 4](https://stackoverflow.com/questions/24400057/connect-4-game-logic)
 -[Simple python connect 4](https://codereview.stackexchange.com/questions/225840/a-simple-connect-4-game-in-python)
 
