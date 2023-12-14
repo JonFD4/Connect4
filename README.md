@@ -73,7 +73,7 @@ Connect 4 is a classic two-player connection game where players choose a color a
 &nbsp;
 
 ![title page](assets/Connect4features/intro-page.png)
-    *title and introduction page*
+    *Title and introduction page* <br>
 The 'landing page' used pyfiglet to design an ASCII art of 'Connect 4'.
 There are 3 options provided: the choice of playing with person, computer or simply exiting.
 Underneath is the input that requests user to make a choice.
@@ -82,21 +82,22 @@ Underneath is the input that requests user to make a choice.
 
 ![rules page](assets/Connect4features/Rules-page.png)
 
-*Rules page*
+*Rules page* <br>
 Immediately on entering selection, the rules of game are displayed in a list on screen. The slighty different changes depending on whether user is playing with computer or another person.
 <br>
 <br>
 
 ![initial board](assets/Connect4features/initial-board.png)
 
-*Initial board*
+*Initial board* <br>
 A free board is printed out. At the top is a text that informs user of who they are playing with. A prompt also request user to chose a column.
 The columns and the rows are labelled to make it readable and easy to for players to choose.
 <br>
 <br>
 
 ![first-turns](assets/Connect4features/first-piece-drops.png)
-*Turns and color + number representation* In the user vs user play, when each player takes their turn, a piece which is a number with a background color is printed (1/yellow and 2/blue). 
+*Turns and color + number representation* <br>
+In the user vs user play, when each player takes their turn, a piece which is a number with a background color is printed (1/yellow and 2/blue). 
 There slightly different features if it is user vs computer play. "Computer is thinking..." which gives the illusion that computer is taking its time to play. Of course, this delayed response is implemented using the time module.
 Each turn shows what decision a player made.
 <br>
@@ -104,23 +105,27 @@ Each turn shows what decision a player made.
 
 ![final piece](assets/Connect4features/finalgameboard.png)
 
-*Final piece* 
+*Final piece* <br>
 The final board shows a beautiful display of blues and yellows and choices that have been made.
 Underneath it is an output that informs who won. This followed by the `play again` query.
-<br>
-<br>
 
+---
+<br>
+<br>
 
 **Input, Input validation, and Error handling**
 <br>
 <br>
+
 ![start choice](assets/Connect4features/start-choice-error-handling.png)
-*Start choice error handling* The user is immediately prompted if the input is invalid. A message is displayed to inform of wrong input, followed by another input asking for choice.
+*Start choice error handling* <br>
+The user is immediately prompted if the input is invalid. A message is displayed to inform of wrong input, followed by another input asking for choice.
 <br>
 <br>
 
 ![column-choice error handling](assets/Connect4features/error-column-message.png)
-*Wrong column input* Immediately, a response informing user of wrong input, followed by request for input is output for user.
+*Wrong column input* <br>
+Immediately, a response informing user of wrong input, followed by request for input is output for user.
 <br>
 <br>
 
@@ -132,8 +137,9 @@ play agian feature request either `yes` or `no`. If it is `yes`, they game resta
 <br>
 
 ![play again error handling](assets/Connect4features/play-again-error-handling.png)
-*play again error handlin*
+*play again error handlin* <br>
 If user input the wrong data, the prompt is set up to keep asking until user inserts either `yes` or `no`. 
+
 ---
 <br>
 
@@ -141,13 +147,17 @@ If user input the wrong data, the prompt is set up to keep asking until user ins
 <br>
 
 ![early exit](assets/Connect4features/premature-exit.png)
-*Early exit* This is the third option that is presented when user is choosing a column. `0` allows user to exit befire game ends. 
+*Early exit* <br>
+This is the third option that is presented when user is choosing a column. `0` allows user to exit befire game ends. 
 Additionally, this feature is beneficial during early development when developer wants to make certain test without havig to complete the game. `Exiting the game. Goodbye!`
 
 
 ![play again exit](assets/Connect4features/play-again-exit.png)
-*play again exit* This removes user from the game completely and outputs a message `Thanks for playing! Exiting...`
+*play again exit* <br>
+This removes user from the game completely and outputs a message `Thanks for playing! Exiting...`
+
 ---
+<br>
 
 # Getting Started
 
@@ -171,6 +181,8 @@ Additionally, this feature is beneficial during early development when developer
 - time
 - textwrap
 
+---
+
 ## Prerequisites and Deployment
 
 The game was developed in VS Code, stored in GitHub as the local repository, and deployed on Heroku.
@@ -191,7 +203,7 @@ The game was developed in VS Code, stored in GitHub as the local repository, and
   ```bash
   pip3 install random
   ```
-
+---
 ### Local Development
 
 **Fork the Repository:**
@@ -220,6 +232,7 @@ Alternatively (Via terminal):
    # or
    python3 connect4.py
    ```
+---
 
 ### Deploying on Heroku
 
@@ -246,6 +259,7 @@ Alternatively (Via terminal):
     - Manually deploy by clicking "Deploy Branch".
 11. **View Deployment:**
     - Once deployed, view your live app by clicking "View".
+---
 
 ### Essentials 
 Things to Remember When Deploying Heroku App
@@ -264,6 +278,8 @@ Things to Remember When Deploying Heroku App
 ### Constraints
 
 The deployment terminal is set to 80 columns by 24 rows. Each line of text needs to be 80 characters or less; otherwise, it will be wrapped onto a second line.
+
+---
 
 ## Testing
 ### Validator Testing with Flake8 and fixing
@@ -318,7 +334,11 @@ I used flake8 to test whether my code fit the pep8 standard. In terminal, I run
 
 After fixing my code, I tested to see if everything was working. 
 Then I used pycodestyle (formerly known as pep8) to rerun the code. The error was fixed except for
+`Running pycodestyle:
 
+```bash
+pycodestyle run.py
+```
 <details>
 <summary> Errors retrieved by pycodestyle </summary>
 
@@ -345,3 +365,7 @@ Then I used pycodestyle (formerly known as pep8) to rerun the code. The error wa
 - run.py:457:80: E501 line too long (82 > 79 characters)
 - run.py:499:80: E501 line too long (84 > 79 characters)
 </details>
+
+
+*Why E501 was ignored?*
+E501 error signifies that code exceeds the maximum line ength specified under PEP8 (70 characters for code). I chose to ignore these errors because, the length of line was needed for readability and practicality such as code for creating the rules as a list.
