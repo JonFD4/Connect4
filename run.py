@@ -3,7 +3,6 @@ from colorama import Back, Fore, init
 import pyfiglet
 import numpy as np
 import sys
-import random
 import string
 import time
 import textwrap
@@ -16,19 +15,20 @@ ROW_COUNT, COLUMN_COUNT = 6, 7
 
 # Define and formatting rules
 width = 50
-PERSON_RULES= """This game is played on a vertical grid with 6 rows and 7 columns. 
-Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.
-The piece will fall to the lowest available position within the chosen column. 
-The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
-Once a player has achieved a connect four, they win the game!
+PERSON_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.\
+Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.\
+The piece will fall to the lowest available position within the chosen column.\
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\
+Once a player has achieved a connect four, they win the game!\
 If all the columns are filled without a connect four, the game ends in a draw."""
 
-COMPUTER_RULES= """This game is played on a vertical grid with 6 rows and 7 columns.
-You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.
-The piece will fall to the lowest available position within the chosen column.
-The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
-Once you or the computer has achieved a connect four, either one of you is the winner!
+COMPUTER_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.\
+You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.\
+The piece will fall to the lowest available position within the chosen column.\
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\
+Once you or the computer has achieved a connect four, either one of you is the winner!\
 If all the columns are filled without a connect four, the game ends in a draw. """
+
 
 def format_text_line(text, width):
     """
@@ -38,18 +38,20 @@ def format_text_line(text, width):
 
     numbered_lines = ""
     for i, line in enumerate(lines, start=1):
-        listed_lines = textwrap.fill(line,width)
-        numbered_lines += f"{i}. {listed_lines} \n \n" 
+        listed_lines = textwrap.fill(line, width)
+        numbered_lines += f"{i}. {listed_lines} \n \n"
     return numbered_lines.strip()
+
 
 def create_board():
     """
-    Create a 2D NumPY list matrix with dimensions specified by 
+    Create a 2D NumPY list matrix with dimensions specified by
     ROW_COUNT and COLUMN_COUNT.
-    The array is initialized with zeros, and dtype=int 
+    The array is initialized with zeros, and dtype=int
     ensures that the elements of the array are of integer data type.
     """
     return np.zeros((ROW_COUNT, COLUMN_COUNT), dtype=int)
+
 
 def drop_piece(board, row, col, piece):
     '''
@@ -67,6 +69,7 @@ def drop_piece(board, row, col, piece):
             board[r][col] = piece
             break
 
+
 def is_valid_location(board, col):
     """
     Function to check if any cell in a specified column has a value of 0.
@@ -74,6 +77,7 @@ def is_valid_location(board, col):
     If it finds at least one zero, the column is considered valid for placing a piece.
     """
     return any(board[r][col] == 0 for r in range(ROW_COUNT))
+
 
 def get_next_open_row(board, col):
     """
@@ -91,6 +95,7 @@ def get_next_open_row(board, col):
         if board[r][col] == 0:
             return r
 
+
 def get_valid_columns(board):
     """
     Get a list of valid column indices where a player can make a move.
@@ -101,7 +106,9 @@ def get_valid_columns(board):
             valid_columns.append(col)
     return valid_columns
 
-def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True):
+
+def print_board(board, last_move_row=None,
+                last_move_col=None, game_ongoing=True):
     """
     Print the game board with row and column labels.
 
@@ -126,9 +133,12 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
 
         for j, cell in enumerate(row):
             if game_ongoing and last_move_row is not None and last_move_col is not None and i == last_move_row and j == last_move_col:
-                # Highlight the last moved cell with a different background color
+                # Highlight the last moved cell with a different background
+                # color
                 player_index = cell - 1  # Player 1 has index 0, Player 2 has index 1
-                print(f"{player_backgrounds[player_index]}{Fore.RESET} {cell} {Fore.RESET}", end=" ")
+                print(
+                    f"{player_backgrounds[player_index]}{Fore.RESET} {cell} {Fore.RESET}",
+                    end=" ")
             else:
                 player_index = cell - 1 if cell in [1, 2] else None
                 background_color = player_backgrounds[player_index] if player_index is not None else ''
@@ -144,9 +154,10 @@ def print_board(board, last_move_row=None, last_move_col=None, game_ongoing=True
     print("  " + " " + col_label_line)
     print()
 
+
 def winning_move(board, piece):
     """
-    Check for a winning combination in horizontal, vertical, and 
+    Check for a winning combination in horizontal, vertical, and
     negatively and positively sloped diagonals, respectively.
     If no winning combination is found, then the function returns false.
     """
@@ -192,11 +203,12 @@ def winning_move(board, piece):
 
     return False
 
+
 def score_window(window, piece):
     """
     This function evaluates a window of positions in the game.
     It calculates a score for a given "window" in a Connect Four game
-    to evaluate the strength of a particular configuration of four adjacent 
+    to evaluate the strength of a particular configuration of four adjacent
     positions in the game grid.
 
     Notably, the scores are arbitrary and used simply to quantify the strengths of the four configurations.
@@ -207,17 +219,21 @@ def score_window(window, piece):
     # Check if all positions contain a player's piece and add 100 to the score
     if window.count(piece) == 4:
         score += 100
-    # Check if there are three occurrences of a player's piece and one empty. A potential win gets 5
+    # Check if there are three occurrences of a player's piece and one empty.
+    # A potential win gets 5
     elif window.count(piece) == 3 and window.count(0) == 1:
         score += 5
-    # Check if there are two occurrences and two empty. Less likely to win. Add 2 to the score
+    # Check if there are two occurrences and two empty. Less likely to win.
+    # Add 2 to the score
     elif window.count(piece) == 2 and window.count(0) == 2:
         score += 2
-    # If there are three occurrences of the opponent's piece and one empty position (0), subtract 4 from the score
+    # If there are three occurrences of the opponent's piece and one empty
+    # position (0), subtract 4 from the score
     if window.count(opponent_piece) == 3 and window.count(0) == 1:
         score -= 4
 
     return score
+
 
 def evaluate_game_state(board, piece):
     score = 0
@@ -242,25 +258,30 @@ def evaluate_game_state(board, piece):
 
             # Evaluate diagonals
             if c <= COLUMN_COUNT - 4 and r <= ROW_COUNT - 4:
-                diagonal_up_window = [int(board[r + i][c + i]) for i in range(4)]
+                diagonal_up_window = [int(board[r + i][c + i])
+                                      for i in range(4)]
                 score += score_window(diagonal_up_window, piece)
 
             if c <= COLUMN_COUNT - 4 and r >= 3:
-                diagonal_down_window = [int(board[r - i][c + i]) for i in range(4)]
+                diagonal_down_window = [
+                    int(board[r - i][c + i]) for i in range(4)]
                 score += score_window(diagonal_down_window, piece)
 
     return score
+
 
 def is_game_over(board):
     """
     Check if the game is over by either a player winning or the board being full.
     """
-    return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_columns(board)) == 0
+    return winning_move(board, 1) or winning_move(
+        board, 2) or len(get_valid_columns(board)) == 0
 
 
 def minimax(board, depth, maximizing_player, alpha, beta):
     if depth == 0 or is_game_over(board):
-        return evaluate_game_state(board, 2)  # Assuming the computer is always the maximizing player
+        # Assuming the computer is always the maximizing player
+        return evaluate_game_state(board, 2)
 
     valid_columns = get_valid_columns(board)
 
@@ -269,7 +290,8 @@ def minimax(board, depth, maximizing_player, alpha, beta):
         for col in valid_columns:
             row = get_next_open_row(board, col)
             temp_board = np.copy(board)
-            drop_piece(temp_board, row, col, 2)  # Assuming the computer is player 2
+            # Assuming the computer is player 2
+            drop_piece(temp_board, row, col, 2)
             eval = minimax(temp_board, depth - 1, False, alpha, beta)
             max_eval = max(max_eval, eval)
             alpha = max(alpha, eval)
@@ -281,7 +303,8 @@ def minimax(board, depth, maximizing_player, alpha, beta):
         for col in valid_columns:
             row = get_next_open_row(board, col)
             temp_board = np.copy(board)
-            drop_piece(temp_board, row, col, 1)  # Assuming the human player is player 1
+            # Assuming the human player is player 1
+            drop_piece(temp_board, row, col, 1)
             eval = minimax(temp_board, depth - 1, True, alpha, beta)
             min_eval = min(min_eval, eval)
             beta = min(beta, eval)
@@ -301,17 +324,20 @@ def get_computer_move(board):
     for col in valid_columns:
         row = get_next_open_row(board, col)
         temp_board = np.copy(board)
-        drop_piece(temp_board, row, col, 2)  # Assuming the computer is player 2
-        score = minimax(temp_board, 4, False, float('-inf'), float('inf'))  # Adjust the depth as needed
+        # Assuming the computer is player 2
+        drop_piece(temp_board, row, col, 2)
+        score = minimax(temp_board, 4, False, float('-inf'),
+                        float('inf'))  # Adjust the depth as needed
         if score > best_score:
             best_score = score
             best_move = col
 
     return best_move
 
+
 def play_against_computer():
     board = create_board()
-    print(format_text_line(COMPUTER_RULES,width) + "\n " )
+    print(format_text_line(COMPUTER_RULES, width) + "\n ")
     print("You are playing against the Computer (Player 2)\n")
     print_board(board)
 
@@ -324,14 +350,17 @@ def play_against_computer():
         while True:
             try:
                 if player_turn == 1:
-                    col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
+                    col = int(
+                        input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
                     if col == -1:
                         print("Exiting the game. Goodbye!")
                         sys.exit()
                 else:
                     # Computer's turn
                     print("Computer is thinking...")
-                    time.sleep(1)  # Introduce a delay to make the computer's move more visible
+                    # Introduce a delay to make the computer's move more
+                    # visible
+                    time.sleep(1)
                     col = get_computer_move(board)
                     print(f"Computer chooses column {col + 1} \n")
 
@@ -346,7 +375,11 @@ def play_against_computer():
         piece = player_turn
         drop_piece(board, row, col, piece)
 
-        print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
+        print_board(
+            board,
+            last_move_row=row,
+            last_move_col=col,
+            game_ongoing=True)
 
         if winning_move(board, piece):
             if player_turn == 1:
@@ -384,6 +417,7 @@ def play_against_computer():
             print(art)
             play_game()
 
+
 def play_game():
     # Run the game
     while True:
@@ -400,7 +434,7 @@ def play_game():
         if choice == 1:
             board = create_board()
             print("You will be playing against your friend\n")
-            print(format_text_line(PERSON_RULES,width) + "\n ")
+            print(format_text_line(PERSON_RULES, width) + "\n ")
             print_board(board)
 
             player_turn = 1
@@ -411,7 +445,8 @@ def play_game():
 
                 while True:
                     try:
-                        col = int(input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
+                        col = int(
+                            input(f"Player {player_turn}, choose a column (1 - 7), or enter 0 to exit: ")) - 1
                         if col == -1:
                             print("Exiting the game. Goodbye!")
                             sys.exit()
@@ -426,7 +461,11 @@ def play_game():
                 piece = player_turn
                 drop_piece(board, row, col, piece)
 
-                print_board(board, last_move_row=row, last_move_col=col, game_ongoing=True)
+                print_board(
+                    board,
+                    last_move_row=row,
+                    last_move_col=col,
+                    game_ongoing=True)
 
                 if winning_move(board, piece):
                     print(f"Player {piece} wins!!\n")
@@ -446,10 +485,12 @@ def play_game():
                 # Switch to the other player's turn
                 player_turn = 3 - player_turn  # Alternates between 1 and 2
             while True:
-                play_again = input("Do you want to play again? (yes/no): ").lower()
+                play_again = input(
+                    "Do you want to play again? (yes/no): ").lower()
                 while play_again not in ['yes', 'no']:
                     print("Invalid input. Please enter 'yes' or 'no'")
-                    play_again = input("Do you want to play again? (yes/no): ").lower()
+                    play_again = input(
+                        "Do you want to play again? (yes/no): ").lower()
 
                 if play_again == 'no':
                     print("Thanks for playing! Exiting...")
@@ -460,7 +501,6 @@ def play_game():
                     print(art)
                     play_game()
 
-
         elif choice == 2:
             play_against_computer()
         elif choice == 3:
@@ -468,6 +508,7 @@ def play_game():
             sys.exit()
         else:
             print("Invalid choice. Please enter 1, 2, or 3.")
+
 
 if __name__ == "__main__":
     T = 'CONNECT 4'
