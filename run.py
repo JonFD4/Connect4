@@ -15,18 +15,18 @@ ROW_COUNT, COLUMN_COUNT = 6, 7
 
 # Define and formatting rules
 width = 50
-PERSON_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.\
-Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.\
-The piece will fall to the lowest available position within the chosen column.\
-The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\
-Once a player has achieved a connect four, they win the game!\
+PERSON_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.
+Two players take turns placing their colored discs (player 1:yellow/1 and player 2: blue/2) into any column of their choice.
+The piece will fall to the lowest available position within the chosen column.
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
+Once a player has achieved a connect four, they win the game!
 If all the columns are filled without a connect four, the game ends in a draw."""
 
-COMPUTER_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.\
-You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.\
-The piece will fall to the lowest available position within the chosen column.\
-The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.\
-Once you or the computer has achieved a connect four, either one of you is the winner!\
+COMPUTER_RULES = """This game is played on a vertical grid with 6 rows and 7 columns.
+You and computer take turns placing your colored discs (player 1:yellow/1 and computer: blue/2) into any column of your choice.
+The piece will fall to the lowest available position within the chosen column.
+The objective is to be the first to connect four of your own colored discs in a row, either horizontally, vertically, or diagonally.
+Once you or the computer has achieved a connect four, either one of you is the winner!
 If all the columns are filled without a connect four, the game ends in a draw. """
 
 
