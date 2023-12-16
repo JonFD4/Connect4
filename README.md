@@ -391,9 +391,8 @@ E501 error signifies that code exceeds the maximum line length specified under P
   - [How to code connect 4 in python](https://www.youtube.com/watch?v=i_4ZWjmybWs&ab_channel=ShaunHalverson)
 - [Connect four in python](https://www.askpython.com/python/examples/connect-four-game)
    * This website was helpful and an inspiration for the game. It helped with understanding and knowing how to set up the game board.
-
--[Logic of connect 4](https://stackoverflow.com/questions/24400057/connect-4-game-logic)
--[Simple python connect 4](https://codereview.stackexchange.com/questions/225840/a-simple-connect-4-game-in-python)
+- [Logic of connect 4](https://stackoverflow.com/questions/24400057/connect-4-game-logic)
+- [Simple python connect 4](https://codereview.stackexchange.com/questions/225840/a-simple-connect-4-game-in-python)
 
 *Minmaxing and AI logics in game development*
 - [Artificial Intelligence at Play — Connect Four (Mini-max algorithm explained)](https://medium.com/analytics-vidhya/artificial-intelligence-at-play-connect-four-minimax-algorithm-explained-3b5fc32e4a4f)
