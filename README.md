@@ -32,7 +32,6 @@ Connect 4 is a classic two-player connection game where players choose a colour 
 ### Demo
 
 - [Live Site on Heroku](https://connect-4-pp3-f3bf4c65e965.herokuapp.com/)
-- [GitHub Repo](https://github.com/JonFD4/Connect4.git)
 ---
 
 ## Features 
