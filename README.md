@@ -370,7 +370,34 @@ pycodestyle run.py
 </details>
 
 <br>
+<details>
+   <summary>Errors from CI Python Linter</summary>
+   
+- 18: E501 line too long (83 > 79 characters)
+- 19: E501 line too long (124 > 79 characters)
+- 21: E501 line too long (132 > 79 characters)
+- 23: E501 line too long (81 > 79 characters)
+- 25: E501 line too long (85 > 79 characters)
+- 26: E501 line too long (127 > 79 characters)
+- 28: E501 line too long (132 > 79 characters)
+- 29: E501 line too long (86 > 79 characters)
+- 30: E501 line too long (82 > 79 characters)
+- 35: E501 line too long (95 > 79 characters)
+- 76: E501 line too long (83 > 79 characters)
+- 77: E501 line too long (86 > 79 characters)
+- 135: E501 line too long (134 > 79 characters)
+- 138: E501 line too long (85 > 79 characters)
+- 140: E501 line too long (90 > 79 characters)
+- 144: E501 line too long (103 > 79 characters)
+- 214: E501 line too long (107 > 79 characters)
+- 275: E501 line too long (81 > 79 characters)
+- 354: E501 line too long (106 > 79 characters)
+- 449: E501 line too long (110 > 79 characters)
+- 456: E501 line too long (82 > 79 characters)
+- 498: E501 line too long (84 > 79 characters)
 
+</details>
+<br>
 <details>
  <summary> Why E501 was ignored? </summary>
 E501 error signifies that code exceeds the maximum line length specified under PEP8 (79 characters for code). I chose to ignore these errors because, the length of line was needed for readability and practicality such as code for creating the rules as a list.
